@@ -1,0 +1,22 @@
+event score
+aantal keywords dat in totaal voorkwam in tweets
+totaal aantal woorden alle tweets
+gemiddeld aantal woorden per tweet
+gemiddelde verschil in dagen tot event per tweet
+gemiddelde verschil in dagen tot event per tweet absoluut
+aantal tweets voor event
+aantal tweets tijdens event
+aantal tweets na event
+aantal tweets voor event procentueel
+aantal tweets tijdens event procentueel
+aantal tweets na event procentueel
+sentiment value met range (-1,1) over tekst alle tweets
+subjetivity value met range (-1,1) over tekst alle tweets
+aantal tweets event
+binary feature of event periodiek is of niet
+periodieke score event (else; NA)
+score van de keyword die periodiek event bepaalde (else NA)
+verschil in dagen tussen periodiek event en echte event (max 7), (else NA)
+confidence score periodiek event (else NA)
+support score periodiek event (else NA)
+type periodiciteit; jaarlijks, maandelijks, etc (else NA)
