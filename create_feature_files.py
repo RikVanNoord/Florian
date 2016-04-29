@@ -482,7 +482,7 @@ max_list = len(indexDictDateEvent) + len(indexDictDateTweet) + len(indexDictUser
 
 ## This is the actual feature extraction.
 
-finalList = getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDictDateTweet, indexDictDateEvent, max_list, perDict, indexDictTypes, otherFeatures, missing_value)	
+finalList = getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDictDateTweet, indexDictDateEvent, max_list, perDict, indexDictTypes, other_features, missing_value)	
 
 final_matrix, array, labels = create_dok_matrix(finalList)
 
