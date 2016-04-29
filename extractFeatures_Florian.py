@@ -19,7 +19,8 @@ outFile = sys.argv[2]
 
 filePer = 'periodic_events_Florian.txt'
 fileTypes = 'approved_types_dbpedia.txt'
-data = [line.strip() for line in open(inFile,'r')]
+data_all = [line.strip() for line in open(inFile,'r')]
+data = [x for x in data_all if x]
 allTypes = [line.strip() for line in open(fileTypes,'r')]
 
 
