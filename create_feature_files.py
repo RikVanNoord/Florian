@@ -10,6 +10,7 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 from collections import Counter
 from sklearn import preprocessing, feature_selection
 from sklearn.feature_selection import SelectKBest, chi2
+import cPickle as pickle
 
 inFile = sys.argv[1]
 outFile = sys.argv[2]
