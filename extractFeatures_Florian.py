@@ -12,7 +12,6 @@ from sklearn import preprocessing
 from sklearn import feature_selection
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
-from collections import Counter
 
 inFile = sys.argv[1]
 outFile = sys.argv[2]
@@ -407,9 +406,7 @@ def show_best_features(array, labels, min_occ = [5,10,20,50], cutoff = 50):
 					feature_names.append('Word ' + get_key(item[0],indexDictWords)+ ' ' + str(item[1])+ ' voor ' + categories[int(label)] + ' ' + str(amt) + '/' + str(total) + ' (' + str(round(float(amt) / float(total) * 100,2)) +'%)')
 				elif item[0]< newValue6:
 					label, amt, total = most_occuring_label(item[0],array, get_key(item[0],indexDictTypes), True)
-					print_s = dict_res[get_key(item[0],indexDictTypes)]
 					feature_names.append('DBpedia' + get_key(item[0],indexDictTypes) + ' ' + str(item[1])+ ' voor ' + categories[int(label)] + ' ' + str(amt) + '/' + str(total) + ' (' + str(round(float(amt) / float(total) * 100,2)) +'%)')
-					#feature_names.append('DBpedia' + get_key(item[0],indexDictTypes) + ' ' + str(item[1])+ ' ' + print_s)
 	
 		for idx, item in enumerate(feature_names):
 			if idx < cutoff:		## only print first few
