@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys,re, datetime,numpy, random, csv,time, math, json
+import sys,re, datetime,numpy,json
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
