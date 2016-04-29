@@ -426,7 +426,6 @@ def getIndices(data):
 	
 	for line in data:
 		count += 1
-		print count
 		splitLine = line.split('\t')
 		
 		keywords = splitLine[3].strip().split(',')
@@ -434,7 +433,6 @@ def getIndices(data):
 		
 		dateEventString = splitLine[1].strip()
 		indexDictDateEvent, counter[4] = addToDict(indexDictDateEvent, counter[4], [dateEventString])	## create dict for dates
-		print len(splitLine)
 		oldTweets = splitLine[5].split('-----')
 		allTweetsTemp = splitLine[6].split('-----')
 		allTweetsAdded = oldTweets + allTweetsTemp
