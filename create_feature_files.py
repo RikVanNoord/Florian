@@ -346,11 +346,11 @@ def show_best_features(array, labels, min_occ = [5,10,20,50], cutoff = 50):
 	## show best features that occur at least 'value' times
 	
 	newValue1 = other_features + len(indexDictDateEvent)
-	newValue2 = newValue1 += len(indexDictDateTweet)
-	newValue3 = newValue2 += len(indexDictUser)
-	newValue4 = newValue3 += len(indexDictKeywords)
-	newValue5 = newValue4 += len(indexDictWords)
-	newValue6 = newValue5 += len(indexDictTypes)
+	newValue2 = newValue1 + len(indexDictDateTweet)
+	newValue3 = newValue2 + len(indexDictUser)
+	newValue4 = newValue3 + len(indexDictKeywords)
+	newValue5 = newValue4 + len(indexDictWords)
+	newValue6 = newValue5 + len(indexDictTypes)
 	
 	for value in min_occ:
 		feature_names = []
