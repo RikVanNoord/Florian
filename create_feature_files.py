@@ -38,10 +38,14 @@ indexDictDateTweet = load_dict('dicts/' + 'indexDictDateTweet.txt')
 indexDictUser = load_dict('dicts/' + 'indexDictUser.txt') 
 indexDictKeywords = load_dict('dicts/' + 'indexDictKeywords.txt') 
 indexDictWords = load_dict('dicts/' + 'indexDictWords.txt') 
-indexDictTypes = load_dict('dicts/' + 'indexDictTypes.txt')  
+indexDictTypes = load_dict('dicts/' + 'indexDictTypes.txt')
+perDict = load_dict('dicts/' + 'perDict.txt')  
 
 
 other_features = 22
+missing_value = 1234567			## create artificial missing value to indicate masked values in numpy
 max_list = len(indexDictDateEvent) + len(indexDictDateTweet) + len(indexDictUser) + len(indexDictKeywords) + len(indexDictWords) + len(indexDictTypes) + other_features
 
-print max_list
+## This is the actual feature extraction.
+
+finalList = getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDictDateTweet, indexDictDateEvent, newValue6, perDict, indexDictTypes, otherFeatures, missing_value)	
