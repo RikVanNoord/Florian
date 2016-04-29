@@ -22,7 +22,6 @@ data_all = [line.strip() for line in open(inFile,'r')]
 data = [x for x in data_all if x]
 allTypes = [line.strip() for line in open(fileTypes,'r')]
 
-
 def load_dict(name):
 	with open(name) as infile:
 		dictje = json.load(infile) 

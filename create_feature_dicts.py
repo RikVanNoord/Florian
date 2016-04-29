@@ -13,6 +13,9 @@ filePer = 'periodic_events_Florian.txt'
 fileTypes = 'approved_types_dbpedia.txt'
 allTypes = [line.strip() for line in open(fileTypes,'r')]
 
+## Obtain input-file with all labeled examples. This way we know what the important features are. If a word is not in the labeled examples, the classifier cannot learn from it anyway.
+## Then it does not have to be added in a new feature.
+
 data_all = [line.strip() for line in open(inFile,'r')]
 data = [x for x in data_all if x]
 
@@ -121,14 +124,16 @@ newValue4, indexDictKeywords = fixDict(indexDictKeywords, newValue3)
 newValue5, indexDictWords = fixDict(indexDictWords, newValue4)					
 newValue6, indexDictTypes = fixDict(indexDictTypes, newValue5)	
 
+print newValue6
+
 ## dump all dictionaries to file
 
-dump_dict('indexDictDateEvent.txt',indexDictDateEvent)
-dump_dict('indexDictDateTweet.txt',indexDictDateTweet)
-dump_dict('indexDictUser.txt',indexDictUser)
-dump_dict('indexDictKeywords.txt',indexDictKeywords)
-dump_dict('indexDictWords.txt',indexDictWords)
-dump_dict('indexDictTypes.txt',indexDictTypes)
+dump_dict('dicts/indexDictDateEvent.txt',indexDictDateEvent)
+dump_dict('dicts/indexDictDateTweet.txt',indexDictDateTweet)
+dump_dict('dicts/indexDictUser.txt',indexDictUser)
+dump_dict('dicts/indexDictKeywords.txt',indexDictKeywords)
+dump_dict('dicts/indexDictWords.txt',indexDictWords)
+dump_dict('dicts/indexDictTypes.txt',indexDictTypes)
 
 
 	
