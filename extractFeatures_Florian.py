@@ -335,7 +335,7 @@ def get_feature_information(array,labels):
 def get_event_information(splitLine, categories):
 	dateEvent =  datetime.datetime.strptime(splitLine[1].strip(),"%Y-%m-%d")
 	eventScore = int(round(float((splitLine[2].strip())),0))
-	oldTweets = line.split('\t')[5].split('-----')
+	oldTweets = splitLine[5].split('-----')
 	category = categories[int(splitLine[8]) -1]	
 	dateEventString = splitLine[1].strip()					## get date information in sparse format
 	
