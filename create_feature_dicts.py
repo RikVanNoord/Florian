@@ -134,6 +134,7 @@ dump_dict('dicts/indexDictUser.txt',indexDictUser)
 dump_dict('dicts/indexDictKeywords.txt',indexDictKeywords)
 dump_dict('dicts/indexDictWords.txt',indexDictWords)
 dump_dict('dicts/indexDictTypes.txt',indexDictTypes)
+dump_dict('dicts/perDict.txt',perDict)
 
 
 	
