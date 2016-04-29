@@ -405,6 +405,7 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 			featureList[indexDictDateEvent[dateEventString]] = 1	
 	
 			for keyword in keywordsFixed:
+				keyword = unicode(keyword, 'utf-8')
 				featureList[indexDictKeywords[keyword]] = 1
 				
 			allTweetsText = ''
@@ -412,9 +413,6 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 			## loop over all tweets to obtain the right values for the tweet-features
 			
 			for tweet in allTweets:
-				for keyword in keywordsFixed:
-					featureList[indexDictKeywords[keyword]] = 1		## add feature for the keywords
-				
 				splitTweet = tweet.strip().split(',')
 				if len(splitTweet) > 2:
 					user = splitTweet[0].strip()				## add user information
@@ -427,7 +425,8 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 						keywordsInTweet = 0
 						
 						for word in finalTweet:
-							featureList[indexDictWords[word]] = 1   ## add information about the word (note: can be binary or total number of occurences, right now it is binary)
+							add_word = unicode(word, 'utf-8')
+							featureList[indexDictWords[add_word]] = 1   ## add information about the word (note: can be binary or total number of occurences, right now it is binary)
 							if word in keywordsFixed:
 								keywordsInTweet += 1				
 						
@@ -435,6 +434,7 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 						
 						featureList[2] += len(finalTweet)			## keep track of total number of words as a feature
 						
+						user = unicode(user, 'utf-8')
 						featureList[indexDictUser[user]] += 1		## add username as same way as bag-of-words
 						
 						## add date information to the featurelist
