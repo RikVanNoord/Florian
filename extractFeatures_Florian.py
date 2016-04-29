@@ -473,6 +473,7 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 	## add the actual feature values
 	
 	for idx,line in enumerate(data):	
+		print idx
 		if idx > 50:
 			break
 		splitLine = line.split('\t')
