@@ -474,7 +474,7 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 	
 	for idx,line in enumerate(data):	
 		print idx
-		if idx > 50:
+		if idx > 20:
 			break
 		splitLine = line.split('\t')
 		if splitLine[8] != 'NA':			## check if it actually was an event (and not a non-event)
