@@ -360,7 +360,9 @@ def show_best_features(array, labels, min_occ = [5,10,20,50], cutoff = 50):
 	feature_numbers = get_feature_information(array,labels)								## get best features by chi-squared value
 
 	feature_names = []
-
+	
+	featureList = [x.strip() for x in open('featurelist_categories.txt','r')]          ## so we can print the right name of the feature for the fixed features
+	
 	nonZeroDict = dict()
 
 	for x in range(len(array[0])):
