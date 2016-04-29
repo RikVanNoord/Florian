@@ -25,7 +25,8 @@ def dump_dict(name, d):
 		f.close()
 
 def addToDict(dictje, counter, lijst):
-	for item in lijst:
+	for item2 in lijst:
+		item = unicode(item2, 'utf-8')
 		if item not in dictje:
 			dictje[item.strip()] = counter
 			counter += 1
