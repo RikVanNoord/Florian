@@ -36,7 +36,7 @@ def load_dict(name):
 indexDictDateEvent = load_dict('dicts/' + 'indexDictDateEvent.txt')
 indexDictDateTweet = load_dict('dicts/' + 'indexDictDateTweet.txt')
 indexDictUser = load_dict('dicts/' + 'indexDictUser.txt') 
-indexDictKeywords = load_dict('dicts/' + 'indexDictKeywords_.txt') 
+indexDictKeywords = load_dict('dicts/' + 'indexDictKeywords.txt') 
 indexDictWords = load_dict('dicts/' + 'indexDictWords.txt') 
 indexDictTypes = load_dict('dicts/' + 'indexDictTypes.txt')  
 
