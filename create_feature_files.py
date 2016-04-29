@@ -12,6 +12,7 @@ from sklearn import preprocessing, feature_selection
 from sklearn.feature_selection import SelectKBest, chi2
 
 inFile = sys.argv[1]
+outFile = sys.argv[2]
 
 ## read in the event(s) that need to be put in feature format
 
