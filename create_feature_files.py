@@ -491,6 +491,6 @@ final_matrix, array, labels = create_dok_matrix(finalList)
 ## dump the final array using pickle
 
 with open(outFile, 'wb') as outfile_part:
-	pickle.dump(dok_array, outfile_part, protocol=0)
+	pickle.dump(final_matrix, outfile_part, protocol=0)
 
 show_best_features(array, labels) ## show information regarding the best features (optional)	
