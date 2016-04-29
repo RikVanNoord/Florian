@@ -31,6 +31,31 @@ def load_dict(name):
 	infile.close()
 	return dictje
 
+def create_dok_matrix(finalList):
+	array_temp2 = numpy.array(finalList)
+	array_temp = array_temp2.astype(float)
+
+	## for feature 4 (average days to event) add number of days (for every feature-value) of the biggest negative difference
+	## this way we make sure there are no negative feature values (some classifiers can't handle those)
+
+	minimum = min(array_temp[:,4])
+	new_row = [float(x + abs(minimum)) for x in array_temp[:,4]]
+	array_temp[:,4] = new_row
+
+	array = numpy.ma.masked_values(array_temp, float(missing_value))
+	aray,labels = get_labels(array, False)												## get data and labels	
+	array = preprocessing.normalize(array, axis=0)										## normalize features	
+	
+	new_array = array.tolist()
+	for x in range(0, len(array)):														## categories get accidently normalized as well, fix that
+		new_array[x].append(labels[x])
+
+	new_array_temp2 = numpy.array(new_array)
+	new_array_temp = new_array_temp2.astype(float)	
+	dok_array = dok_matrix(new_array_temp)
+
+	return dok_array, new_array_temp, labels
+
 ## load dictionaries
 
 indexDictDateEvent = load_dict('dicts/' + 'indexDictDateEvent.txt')
@@ -49,3 +74,10 @@ max_list = len(indexDictDateEvent) + len(indexDictDateTweet) + len(indexDictUser
 ## This is the actual feature extraction.
 
 finalList = getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDictDateTweet, indexDictDateEvent, newValue6, perDict, indexDictTypes, otherFeatures, missing_value)	
+
+final_matrix, array, labels = create_dok_matrix(finalList)
+
+with open(outFile, 'wb') as outfile_part:
+	pickle.dump(dok_array, outfile_part, protocol=0)
+
+show_best_features(array, labels) ## show information regarding the best features (optional)	
