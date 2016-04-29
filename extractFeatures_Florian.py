@@ -425,6 +425,7 @@ def getIndices(data):
 	
 	for line in data:
 		count += 1
+		print count
 		splitLine = line.split('\t')
 		
 		keywords = splitLine[3].strip().split(',')
