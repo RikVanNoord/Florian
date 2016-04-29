@@ -432,7 +432,7 @@ def getIndices(data):
 		
 		dateEventString = splitLine[1].strip()
 		indexDictDateEvent, counter[4] = addToDict(indexDictDateEvent, counter[4], [dateEventString])	## create dict for dates
-		
+		print len(splitLine)
 		oldTweets = splitLine[5].split('-----')
 		allTweetsTemp = splitLine[6].split('-----')
 		allTweetsAdded = oldTweets + allTweetsTemp
