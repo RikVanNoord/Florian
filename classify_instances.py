@@ -230,12 +230,10 @@ def cross_validation_own(array, labels, num_folds, down, test, print_res):
 		fold_list.append(array_part)								## add the parts in list of lists
 		label_list.append(label_part)
 		list_num = list_num_new										## update where we are in dividing the data
-		print list_num
 	
 	pred_list = []
 	
 	for x in range (len(fold_list)):
-		print 'do i even get here'
 		train_data, test_data, train_labels, test_labels = get_cv_data_labels(fold_list, label_list,x)		## obtain train and test data
 		test.fit(train_data, train_labels)
 		pred = test.predict(test_data)
