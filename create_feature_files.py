@@ -502,4 +502,4 @@ final_matrix, labels = create_dok_matrix(finalList)
 with open(outFile, 'wb') as outfile_part:
 	pickle.dump(final_matrix, outfile_part, protocol=0)
 
-show_best_features(array, labels) ## show information regarding the best features (optional)	
+show_best_features(final_matrix, labels) ## show information regarding the best features (optional)	
