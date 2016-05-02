@@ -91,7 +91,7 @@ def train_svm(labels,array, num_folds, num_jobs, params = 50):
 	
 	paramsearch = RandomizedSearchCV(model, param_grid, cv=num_folds, verbose=2,n_iter = params,n_jobs=num_jobs) 
 	print("Grid search...")
-	paramsearch.fit(array_all,numpy.asarray(labels))
+	paramsearch.fit(array,numpy.asarray(labels))
 	print("Prediction...")
 	parameters = paramsearch.best_params_
 	
@@ -109,14 +109,12 @@ def train_svm(labels,array, num_folds, num_jobs, params = 50):
 			kernel=parameters['estimator__kernel'],gamma=parameters['estimator__gamma'],
 			degree=parameters['estimator__degree'])
 		out_test = OutputCodeClassifier(test,n_jobs=1)
-		out_test.fit(array_all,labels)
-		#print('Voor SVM final tests after 5-fold cross-validation parameter search:\n')
-		#do_all_tests(test, array_all, array,labels,1, True, svm_bool, down)
+		out_test.fit(array,labels)
 	else:
 		test = svm.SVC(probability=True, C=parameters['C'],
 			kernel=parameters['kernel'],gamma=parameters['gamma'],
 			degree=parameters['degree'])
-		test.fit(array_all,labels)
+		#test.fit(array,labels)
 	return test	
 
 ## Function for down-sampling the most dominant class (always public event in my case, so therefore we can just check for value 3.0)
@@ -242,3 +240,6 @@ cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
 
 test = train_svm(labels,array, num_folds, num_jobs)		## grid search (takes a long time usually)
 cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
+
+## For doing bag-of-words in advance, we need to know what the word-features are. I did this by just saving a while with the boundaries after creating the dictionaries.
+## This means that it is important to only do this when the feature-file is obtained by using the latest version of dictionaries.
