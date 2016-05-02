@@ -149,7 +149,11 @@ def train_svm(labels,array, num_folds, num_jobs, params = 2):
 
 ## Function for down-sampling the most dominant class (always public event in my case, so therefore we can just check for value 3.0)
 
-def down_sample_array(new_array, keepSamples):
+def down_sample_array(array, labels):
+	col_labels = numpy.asarray(labels).reshape(len(labels),1)					## reshape
+	array_with_label = numpy.append(array, col_labels, axis = 1)				## add labels	
+	keepSamples = find_keep_samples(array_with_label)							## find number of samples we keep
+	
 	rest_data = [] 
 	publiek_data = []
 	
@@ -176,6 +180,23 @@ def down_sample_array(new_array, keepSamples):
 	
 	labels_int = [int(i) for i in labels]	
 	return new_array, labels_int
+
+## function for printing relevant scores
+
+def print_results(labels, pred_list):
+	print 'Accuracy:',accuracy_score(list(labels), pred_list)
+	print 'f1-weighted:',f1_score(list(labels),pred_list, average='weighted',pos_label = None),'\n' 
+	print 'precision-weighted:',precision_score(list(labels),pred_list, average='weighted',pos_label = None),'\n' 
+	print 'recall-weighted:',recall_score(list(labels),pred_list, average='weighted',pos_label = None),'\n'    
+	
+	do_clf_report(pred_list, list(labels), 'Classification report:\n')
+
+	#print 'Predictions:'			 ## print actual predictions
+	#pred_c = Counter(pred_list)
+	#for key in pred_c:
+	#	print 'Cat',key,':', pred_c[key]
+
+## function for adding a binary feature for eacht category when doing bag-of-words in advance
 
 def add_clf_features(array, clf_list):
 	for x in range(len(set(list(labels)))):					## add binary feature for each category
@@ -236,47 +257,38 @@ def cross_validation_own(array, labels, num_folds, down, test, print_res):
 	
 	labels = labels[0:list_num_new]  ## delete labels that were just outside X equal folds (sometimes losing few instances, it is possible to save them and classify with leave-one-out anyway, or simply add them to last part)
 	array = array[0:list_num_new]
+	
 	## print lot of information regarding the results
 	
 	if print_res:
-		print 'Accuracy:',accuracy_score(list(labels), pred_list)
-		print 'f1-weighted:',f1_score(list(labels),pred_list, average='weighted',pos_label = None),'\n' 
-		print 'precision-weighted:',precision_score(list(labels),pred_list, average='weighted',pos_label = None),'\n' 
-		print 'recall-weighted:',recall_score(list(labels),pred_list, average='weighted',pos_label = None),'\n'    
-		
-		do_clf_report(pred_list, list(labels), 'Classification report:\n')
-	
-		#print 'Predictions:'			 ## print actual predictions
-		#pred_c = Counter(pred_list)
-		#for key in pred_c:
-		#	print 'Cat',key,':', pred_c[key]
+		print_results(labels, pred_list)
 	
 	return pred_list, array, labels	
 
 
-#### Main
+############ Main ##############
 
 ## Ik heb nog geen mooie argumentenstructuur gemaakt voor welke test, downsamplen, num_folds voor CV, etc. Dat wil je (dacht ik) toch het liefst zelf regelen.
 
-inFile = sys.argv[1]
+labeled_data = sys.argv[1]
+unlabeled_data = sys.argv[2]
 
+labeled = True
 print_res = True
 shuffle_data = True
 down_sample = True
 num_folds = 5
 num_jobs = 16 			## for svm number of parallel jobs
 
-array = numpy.load(inFile)
+array = numpy.load(labeled_data)
+	
 array, labels = get_array_and_labels(array, shuffle_data)		## obtain data
 array = preprocessing.normalize(array, axis=0)					## normalize feature values
 
 ## Down sampling data (if set to true)
 
 if down_sample:
-	col_labels = numpy.asarray(labels).reshape(len(labels),1)					## reshape
-	array_with_label = numpy.append(array, col_labels, axis = 1)				## add labels	
-	keepSamples = find_keep_samples(array_with_label)							## find number of samples we keep
-	array, labels = down_sample_array(array_with_label, keepSamples)			## create randomized down-sampled array	
+	array, labels = down_sample_array(array, labels)			## create randomized down-sampled array	
 
 ## For doing bag-of-words in advance, we need to know what the word-features are. I did this by just saving a while with the boundaries after creating the dictionaries.
 ## This means that it is important to only do this when the feature-file is obtained by using the latest version of the dictionaries.
@@ -284,7 +296,9 @@ if down_sample:
 word_array, other_array = split_array_words(array)
 
 ######## Classifying labeled data #########
-if labeled:
+
+if labeled:	
+	
 	## Bayes normal
 
 	test = MultinomialNB()
@@ -305,5 +319,12 @@ if labeled:
 ####### Classifying unlabeled data #########
 
 else:
+	array_unlabeled = numpy.load(unlabeled_data)
+	test = MultinomialNB()	
+	test.fit(array, labels)
+	pred = test.predict(array_unlabeled)
+	
+	if print_res:
+		print_results(labels, pred)
 	
 
