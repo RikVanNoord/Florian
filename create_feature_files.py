@@ -54,9 +54,9 @@ def create_dok_matrix(finalList):
 
 	new_array_temp2 = numpy.array(new_array)
 	new_array_temp = new_array_temp2.astype(float)	
-	dok_array = dok_matrix(new_array_temp)
+	#dok_array = dok_matrix(new_array_temp)
 
-	return dok_array, new_array_temp, labels
+	return new_array_temp, labels
 
 def getPeriodicityFeatures(keywordsFixed, keywordScores, dateEvent, perDict, missing_value):
 	threshold = 3 ## 3 day threshold
@@ -495,7 +495,7 @@ max_list = len(indexDictDateEvent) + len(indexDictDateTweet) + len(indexDictUser
 
 finalList = getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDictDateTweet, indexDictDateEvent, max_list, perDict, indexDictTypes, other_features, missing_value)	
 
-final_matrix, array, labels = create_dok_matrix(finalList)
+final_matrix, labels = create_dok_matrix(finalList)
 
 ## dump the final array using pickle
 
