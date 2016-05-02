@@ -97,15 +97,19 @@ def find_keep_samples(array):
 
 ## svm grid search
 
-def train_svm(labels,array, num_folds, num_jobs, params = 50):
+def train_svm(labels,array, num_folds, num_jobs, params = 2):
 	#obtain the best parameter settings for an svm outputcode classifier
 	bestParameters = dict()
 	if len(labels) > 2:
 		print("outputcodeclassifier")
-		param_grid = {'estimator__C': [0.001, 0.005, 0.01,0.1, 0.5, 1,2.5, 5, 10,15,25, 50,75, 100, 500, 1000],
-			'estimator__kernel': ['linear','rbf','poly'], 
-			'estimator__gamma': [0.0005,0.001, 0.002, 0.008,0.016, 0.032,0.064, 0.128,0.256, 0.512, 1.024, 2.048],
-			'estimator__degree': [1,2,3,4]}
+		#param_grid = {'estimator__C': [0.001, 0.005, 0.01,0.1, 0.5, 1,2.5, 5, 10,15,25, 50,75, 100, 500, 1000],
+		#	'estimator__kernel': ['linear','rbf','poly'], 
+		#	'estimator__gamma': [0.0005,0.001, 0.002, 0.008,0.016, 0.032,0.064, 0.128,0.256, 0.512, 1.024, 2.048],
+		#	'estimator__degree': [1,2,3,4]}
+		param_grid = {'estimator__C': [0.001, 0.005],
+			'estimator__kernel': ['linear','rbf'], 
+			'estimator__gamma': [0.0005,0.001],
+			'estimator__degree': [1]}
 		model = OutputCodeClassifier(svm.SVC(probability=True))
 	else:
 		print("svc model")
@@ -249,7 +253,7 @@ down_sample = True
 print_res = True
 shuffle_data = True
 num_folds = 5
-num_jobs = 16 			## for svm
+num_jobs = 16 			## for svm number of parallel jobs
 
 array = numpy.load(inFile)
 array, labels = get_array_and_labels(array, shuffle_data)		## obtain data
