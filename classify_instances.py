@@ -178,8 +178,7 @@ print_res = True
 shuffle_data = True
 num_folds = 5
 
-dok_array = numpy.load(inFile)
-array = dok_array.todense()
+array = numpy.load(inFile)
 array, labels = get_array_and_labels(array, shuffle_data)		## obtain data
 array = preprocessing.normalize(array, axis=0)						## normalize feature values
 
