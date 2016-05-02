@@ -50,21 +50,18 @@ def delete_features(array):
 		keep_in = []
 		keep_out = []
 		for y in range(len(array[x])):
-			if	
+			if	y > b1 and y < b2:
 				keep_in.append(array[x][y])
 			else:
 				keep_out.append(array[x][y])			
 		new_array.append(keep_in)
 		delete_array.append(keep_out)
 	
-	
 	new_array_temp = numpy.array(new_array)
 	new_array_temp_float = new_array_temp.astype(float)
-	masked_array_new = numpy.ma.masked_invalid(new_array_temp_float, float(NAvalue))
 	
 	delete_array_temp = numpy.array(delete_array)
 	delete_array_temp_float = delete_array_temp.astype(float)
-	masked_delete_array = numpy.ma.masked_invalid(delete_array_temp_float, float(NAvalue))
 	return masked_array_new, masked_delete_array
 
 ## function for feature selection, only keeps the best [keep_number] features
