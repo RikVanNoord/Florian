@@ -415,7 +415,8 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 	
 	for idx,line in enumerate(data):	
 		if idx % 50 == 0:
-			print idx
+			print idx,': number of failed keys is', failed_keys
+			
 		if idx > 700:
 			break
 		splitLine = line.split('\t')
