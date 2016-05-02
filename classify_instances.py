@@ -227,6 +227,7 @@ down_sample = True
 print_res = True
 shuffle_data = True
 num_folds = 5
+num_jobs = 16 			## for svm
 
 array = numpy.load(inFile)
 array, labels = get_array_and_labels(array, shuffle_data)		## obtain data
@@ -234,6 +235,12 @@ array = preprocessing.normalize(array, axis=0)					## normalize feature values
 
 ## Different tests
 
+## Bayes
+
 test = MultinomialNB()
-cross_validation_own(array, labels, num_folds, down_sample, test, print_res)		
-	
+cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
+
+## SVM
+
+test = train_svm(labels,array, num_folds, num_jobs)		## grid search
+cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
