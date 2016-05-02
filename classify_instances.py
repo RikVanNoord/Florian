@@ -281,6 +281,8 @@ array = preprocessing.normalize(array, axis=0)					## normalize feature values
 
 word_array, other_array = split_array_words(array)
 
+print len(array), len(word_array), len(other_array)
+
 ## Different tests
 
 ## Bayes normal
