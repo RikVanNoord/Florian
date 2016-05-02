@@ -186,6 +186,8 @@ def add_clf_features(array, clf_list):
 			else:
 				add_list.append(0.0)
 		cat_array = numpy.array(add_list).reshape(len(add_list),1)
+		print array.shape
+		print cat_array.shape
 		array = numpy.append(array, cat_array, axis = 1)			## add binary feature to feature set
 	return array	
 	
@@ -284,7 +286,6 @@ word_array, other_array = split_array_words(array)
 
 test = MultinomialNB()
 pred = cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
-print 'len pred is',len(pred)
 
 ## SVM
 
@@ -295,8 +296,6 @@ print 'len pred is',len(pred)
 
 test = MultinomialNB()
 pred = cross_validation_own(word_array, labels, num_folds, down_sample, test, False) ## first do only words, don't print
-print 'len pred is',len(pred)
-print len(other_array[0])
 clf_array = add_clf_features(other_array, pred)
 cross_validation_own(clf_array, labels, num_folds, down_sample, test, print_res)
 
