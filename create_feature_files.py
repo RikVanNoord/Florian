@@ -12,6 +12,9 @@ from sklearn import preprocessing, feature_selection
 from sklearn.feature_selection import SelectKBest, chi2
 import cPickle as pickle
 
+global failed_keys
+failed_keys = 0
+
 inFile = sys.argv[1]
 outFile = sys.argv[2]
 
@@ -387,6 +390,19 @@ def show_best_features(array, labels, min_occ = [5,10,20,50], cutoff = 50):
 			if idx < cutoff:		## only print first few
 				print item
 
+## function to add values to the featurelist, ignoring key-errors this way
+
+def add_to_feature_dict(d, key, f_list):
+	global failed_keys
+	
+	if key in d:
+		f_list[d[key]] = 1
+	else:
+		failed_keys += 1
+	
+	return f_list		
+	
+
 def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDictDateTweet, indexDictDateEvent, maxList, perDict, indexDictTypes, otherFeatures, missing_value):
 	finalList = []
 	featureList = maxList * [0]			## create list with zero's
@@ -413,11 +429,11 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 			## add 1 (positive) at the right place in the feature-file using the dictionary
 			
 			featureList[0] = eventScore									## first feature is event score
-			featureList[indexDictDateEvent[dateEventString]] = 1	
+			featureList = add_to_feature_dict(indexDictDateEvent, dateEventString, featureList)	
 	
 			for keyword in keywordsFixed:
 				keyword = unicode(keyword, 'utf-8')
-				featureList[indexDictKeywords[keyword]] = 1
+				featureList = add_to_feature_dict(indexDictKeywords, keyword, featureList)	
 				
 			allTweetsText = ''
 			
@@ -438,6 +454,7 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 						for word in finalTweet:
 							add_word = unicode(word, 'utf-8')
 							featureList[indexDictWords[add_word]] = 1   ## add information about the word (note: can be binary or total number of occurences, right now it is binary)
+							featureList = add_to_feature_dict(indexDictWords, add_word, featureList)	
 							if word in keywordsFixed:
 								keywordsInTweet += 1				
 						
@@ -446,11 +463,11 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 						featureList[2] += len(finalTweet)			## keep track of total number of words as a feature
 						
 						user = unicode(user, 'utf-8')
-						featureList[indexDictUser[user]] += 1		## add username as same way as bag-of-words
+						featureList = add_to_feature_dict(indexDictUser, user, featureList)	 ## add username as same way as bag-of-words
 						
 						## add date information to the featurelist
 						
-						featureList[indexDictDateTweet[dateTweetString]] += 1
+						featureList = add_to_feature_dict(indexDictDateTweet, dateTweetString, featureList)
 						dateTweet = datetime.datetime.strptime(splitTweet[1].strip(),"%Y-%m-%d")
 						beforeAfter, diff, diffTotal, absDiffTotal = getDateInformation(dateTweet, dateEvent)
 						
