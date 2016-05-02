@@ -23,7 +23,8 @@ def get_array_and_labels(array, shuffle):
 	if shuffle:
 		numpy.random.shuffle(array)
 	labels = []
-	
+	print len(array)
+	print len(array[0])
 	for x in range(len(array)):
 		if int(array[x][-1]) == 7 or int(array[x][-1]) == 9:					## filter celebrity news
 			labels.append(7.0)													## add "overig" instead
