@@ -242,7 +242,7 @@ def cross_validation_own(array, labels, num_folds, down, test, print_res):
 		print len(pred_list)
 	
 	labels = labels[0:list_num_new]  ## delete labels that were just outside X equal folds (sometimes losing few instances, it is possible to save them and classify with leave-one-out anyway, or simply add them to last part)
-	
+	array = array[0:list_num_new]
 	## print lot of information regarding the results
 	
 	if print_res:
@@ -258,7 +258,7 @@ def cross_validation_own(array, labels, num_folds, down, test, print_res):
 		#for key in pred_c:
 		#	print 'Cat',key,':', pred_c[key]
 	
-	return pred_list	
+	return pred_list, array, labels	
 
 
 #### Main
@@ -287,7 +287,7 @@ word_array, other_array = split_array_words(array)
 ## Bayes normal
 
 test = MultinomialNB()
-pred = cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
+cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
 
 ## SVM
 
@@ -297,7 +297,7 @@ pred = cross_validation_own(array, labels, num_folds, down_sample, test, print_r
 ## Bag-of-words in advance for Bayes (only change test variable to do so for SVM)
 
 test = MultinomialNB()
-pred = cross_validation_own(word_array, labels, num_folds, down_sample, test, False) ## first do only words, don't print
+pred, word_array, labels = cross_validation_own(word_array, labels, num_folds, down_sample, test, False) ## first do only words, don't print
 clf_array = add_clf_features(other_array, pred)
 cross_validation_own(clf_array, labels, num_folds, down_sample, test, print_res)
 
