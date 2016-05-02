@@ -124,7 +124,7 @@ def cross_validation_own(array, labels, num_folds, down, test, print_res):
 	list_num = 0
 	
 	if down:
-		col_labels = np.asarray(labels).reshape(len(labels),1)									## reshape
+		col_labels = numpy.asarray(labels).reshape(len(labels),1)									## reshape
 		array_with_label = numpy.append(array, col_labels, axis = 1)				## add labels	
 		keepSamples = find_keep_samples(array_with_label)							## find number of samples we keep
 		array, labels = down_sample_array(array_with_label, keepSamples)			## create randomized down-sampled array		
