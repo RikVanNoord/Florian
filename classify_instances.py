@@ -230,6 +230,7 @@ def cross_validation_own(array, labels, num_folds, down, test, print_res):
 		fold_list.append(array_part)								## add the parts in list of lists
 		label_list.append(label_part)
 		list_num = list_num_new										## update where we are in dividing the data
+		print list_num
 	
 	pred_list = []
 	
@@ -280,8 +281,6 @@ array = preprocessing.normalize(array, axis=0)					## normalize feature values
 ## This means that it is important to only do this when the feature-file is obtained by using the latest version of the dictionaries.
 
 word_array, other_array = split_array_words(array)
-
-print len(array), len(word_array), len(other_array)
 
 ## Different tests
 
