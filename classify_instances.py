@@ -282,8 +282,8 @@ word_array, other_array = split_array_words(array)
 
 ## Bayes normal
 
-test = MultinomialNB()
-cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
+#test = MultinomialNB()
+#cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
 
 ## SVM
 
