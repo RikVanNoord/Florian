@@ -282,8 +282,9 @@ word_array, other_array = split_array_words(array)
 
 ## Bayes normal
 
-#test = MultinomialNB()
-#cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
+test = MultinomialNB()
+pred = cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
+print 'len pred is',len(pred)
 
 ## SVM
 
@@ -294,7 +295,6 @@ word_array, other_array = split_array_words(array)
 
 test = MultinomialNB()
 pred = cross_validation_own(word_array, labels, num_folds, down_sample, test, False) ## first do only words, don't print
-print pred
 print 'len pred is',len(pred)
 print len(other_array[0])
 clf_array = add_clf_features(other_array, pred)
