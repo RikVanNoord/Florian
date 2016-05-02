@@ -181,12 +181,12 @@ def add_clf_features(array, clf_list):
 	for x in range(len(set(list(labels)))):					## add binary feature for each category
 		add_list = []
 		for item in clf_list:
-			if item[0] == x:
+			if item == x:
 				add_list.append(1.0)
 			else:
 				add_list.append(0.0)
 		cat_array = numpy.array(add_list).reshape(len(add_list),1)
-		array = numpy.append(array, cat_array, axis = 1)
+		array = numpy.append(array, cat_array, axis = 1)			## add binary feature to feature set
 	return array	
 	
 ## I made my own functions for cross validation, since the built-in CV functions do not let you inspect all the output you want (especially necessary for the secondary social actions)
