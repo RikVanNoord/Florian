@@ -178,8 +178,10 @@ print_res = True
 shuffle_data = True
 num_folds = 5
 
-keepArray = numpy.load(inFile)
-array_all, labels = get_array_and_labels(keepArray, shuffle_data)
+dok_array = numpy.load(inFile)
+array = dok_array.todense()
+array, labels = get_array_and_labels(keepArray, shuffle_data)		## obtain data
+array = preprocessing.normalize(array, axis=0)						## normalize feature values
 
 test = MultinomialNB()
 cross_validation_own(array, labels, num_folds, down_sample, test, print_res)		
