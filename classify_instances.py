@@ -240,6 +240,7 @@ def cross_validation_own(array, labels, num_folds, down, test, print_res):
 		pred = test.predict(test_data)
 		pred_temp = list(pred)
 		pred_list += pred_temp
+		print len(pred_list)
 	
 	labels = labels[0:list_num_new]  ## delete labels that were just outside X equal folds (sometimes losing few instances, it is possible to save them and classify with leave-one-out anyway, or simply add them to last part)
 	
