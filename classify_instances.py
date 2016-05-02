@@ -3,7 +3,6 @@
 
 import sys,re, numpy, ast, random, math, time, json
 from scipy import delete, stats
-#from sklearn import metrics
 from sklearn.metrics import *
 from sklearn import svm
 from sklearn import linear_model
@@ -24,7 +23,7 @@ def get_array_and_labels(array, shuffle):
 	if shuffle:
 		numpy.random.shuffle(array)
 	labels = []
-	print array[0]
+
 	for x in range(len(array)):
 		if int(array[x][-1]) == 7 or int(array[x][-1]) == 9:					## filter celebrity news
 			labels.append(7.0)													## add "overig" instead

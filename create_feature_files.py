@@ -190,9 +190,7 @@ def fixAmbigiousPages(pages, anchors):
 	finalPagesSet = list(set(finalPages))
 	return finalPagesSet
 
-def getDbpediaFeatures(keywords, indexDictTypes, featureList, label):
-	anchors = buildAnchorHash() ## get the anchors
-	
+def getDbpediaFeatures(keywords, indexDictTypes, featureList, label, anchors):	
 	## set the general query information
 	
 	sparql = SPARQLWrapper("http://nl.dbpedia.org/sparql")
@@ -395,6 +393,8 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 	categories = ['Sport','Politiek','Uitzending','Publieksevenement','Software','Bijzondere dag','Sociale actie','Celebrity nieuws','Reclame','Overig']
 	total_db_list = []
 	
+	anchors = buildAnchorHash() ## get the anchors for DBpedia extraction
+	
 	## add the actual feature values
 	
 	for idx,line in enumerate(data):	
@@ -470,7 +470,7 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 			
 			label = int(splitLine[8])-1 		## set label
 			
-			featureList, db_list = getDbpediaFeatures(keywords, indexDictTypes, featureList, label)
+			featureList, db_list = getDbpediaFeatures(keywords, indexDictTypes, featureList, label, anchors)
 		
 			featureList.append(int(splitLine[8]) -1)					## add the label as number
 			finalList.append(featureList)								## keep track of the final featureList over all events
