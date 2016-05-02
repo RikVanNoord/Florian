@@ -92,6 +92,8 @@ def getPeriodicityFeatures(keywordsFixed, keywordScores, dateEvent, perDict, mis
 	
 	return bestPer
 
+## function to do the disambiguation in DBpedia (provided code)
+
 def buildAnchorHash():
 	page = csv.reader(open("page.csv", "r"), delimiter=",")
 	pages = dict()
@@ -149,7 +151,7 @@ def runSparql(pages,select, answer, dbpedia, rdfType, sparql, indexDictType, fea
 		for item in allResults:
 			if item in indexDictType:										## check if it occurred in the approved types
 				db_list.append([str(item), page, categories[label]])
-				featureList[indexDictType[item]] += 1
+				featureList[indexDictType[item]] += 1						## add in the right location
 					
 	return featureList, db_list	
 					
