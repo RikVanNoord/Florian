@@ -398,7 +398,7 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 	## add the actual feature values
 	
 	for idx,line in enumerate(data):	
-		if idx %% 50 == 0:
+		if idx % 50 == 0:
 			print idx
 		#if idx > 200:
 		#	break
