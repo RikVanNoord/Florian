@@ -71,7 +71,7 @@ def find_keep_samples(array):
 
 ## svm grid search
 
-def train_svm(labels,array, num_folds, num_jobs):
+def train_svm(labels,array, num_folds, num_jobs, params = 50):
 	#obtain the best parameter settings for an svm outputcode classifier
 	bestParameters = dict()
 	if len(labels) > 2:
@@ -202,13 +202,11 @@ def cross_validation_own(array, labels, num_folds, down, test, print_res):
 	## print lot of information regarding the results
 	
 	if print_res:
-	
 		print 'Accuracy:',accuracy_score(list(labels), pred_list)
 		print 'f1-weighted:',f1_score(list(labels),pred_list, average='weighted',pos_label = None),'\n' 
 		print 'precision-weighted:',precision_score(list(labels),pred_list, average='weighted',pos_label = None),'\n' 
 		print 'recall-weighted:',recall_score(list(labels),pred_list, average='weighted',pos_label = None),'\n'    
 		
-		print precision_recall_fscore_support(list(labels), pred_list, average='micro', pos_label=None)
 		do_clf_report(pred_list, list(labels), 'Classification report:\n')
 	
 		#print 'Predictions:'			 ## print actual predictions
