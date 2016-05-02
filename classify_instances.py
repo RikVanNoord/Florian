@@ -283,22 +283,27 @@ if down_sample:
 
 word_array, other_array = split_array_words(array)
 
-## Different tests
+######## Classifying labeled data #########
+if labeled:
+	## Bayes normal
 
-## Bayes normal
+	test = MultinomialNB()
+	cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
 
-test = MultinomialNB()
-cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
+	## SVM
 
-## SVM
+	test = train_svm(labels,array, num_folds, num_jobs)		## grid search (takes a long time usually)
+	cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
 
-#test = train_svm(labels,array, num_folds, num_jobs)		## grid search (takes a long time usually)
-#cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
+	## Bag-of-words in advance for Bayes (only change test variable to do so for SVM)
 
-## Bag-of-words in advance for Bayes (only change test variable to do so for SVM)
+	test = MultinomialNB()
+	pred, word_array, labels = cross_validation_own(word_array, labels, num_folds, down_sample, test, False) ## first do only words, don't print
+	clf_array = add_clf_features(other_array, pred)
+	cross_validation_own(clf_array, labels, num_folds, down_sample, test, print_res)
 
-test = MultinomialNB()
-pred, word_array, labels = cross_validation_own(word_array, labels, num_folds, down_sample, test, False) ## first do only words, don't print
-clf_array = add_clf_features(other_array, pred)
-cross_validation_own(clf_array, labels, num_folds, down_sample, test, print_res)
+####### Classifying unlabeled data #########
+
+else:
+	
 
