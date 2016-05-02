@@ -38,31 +38,29 @@ def get_array_and_labels(array, shuffle):
 
 ## splitting the word features from the other features
 
-def delete_features(array):
+def split_array_words(array):
 	boundaries = [x.strip() for x in open('word_feature_boundaries.txt','r')]
 	b1 = boundaries[0].split()[0]
 	b2 = boundaries[0].split()[1]
 	
-	new_array = []
-	delete_array = []		
+	word_array = []
+	other_array = []		
 	
 	for x in range(len(array)):
 		keep_in = []
 		keep_out = []
 		for y in range(len(array[x])):
-			if	y > b1 and y < b2:
+			if	(y >= b1 and y < b2):
 				keep_in.append(array[x][y])
 			else:
 				keep_out.append(array[x][y])			
-		new_array.append(keep_in)
-		delete_array.append(keep_out)
+		word_array.append(keep_in)
+		other_array.append(keep_out)
 	
-	new_array_temp = numpy.array(new_array)
-	new_array_temp_float = new_array_temp.astype(float)
+	word_array_final = numpy.array(word_array).astype(float)	
+	other_array_final = numpy.array(other_array).astype(float)
 	
-	delete_array_temp = numpy.array(delete_array)
-	delete_array_temp_float = delete_array_temp.astype(float)
-	return masked_array_new, masked_delete_array
+	return word_array_final, other_array_final
 
 ## function for feature selection, only keeps the best [keep_number] features
 	
@@ -271,3 +269,5 @@ cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
 
 ## For doing bag-of-words in advance, we need to know what the word-features are. I did this by just saving a while with the boundaries after creating the dictionaries.
 ## This means that it is important to only do this when the feature-file is obtained by using the latest version of the dictionaries.
+
+word_array, other_array = split_array_words(array)
