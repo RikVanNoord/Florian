@@ -36,6 +36,37 @@ def get_array_and_labels(array, shuffle):
 	labels_int = [int(i) for i in labels]	
 	return new_array2, labels_int
 
+## splitting the word features from the other features
+
+def delete_features(array):
+	boundaries = [x.strip() for x in open('word_feature_boundaries.txt','r')]
+	b1 = boundaries[0].split()[0]
+	b2 = boundaries[0].split()[1]
+	
+	new_array = []
+	delete_array = []		
+	
+	for x in range(len(array)):
+		keep_in = []
+		keep_out = []
+		for y in range(len(array[x])):
+			if	
+				keep_in.append(array[x][y])
+			else:
+				keep_out.append(array[x][y])			
+		new_array.append(keep_in)
+		delete_array.append(keep_out)
+	
+	
+	new_array_temp = numpy.array(new_array)
+	new_array_temp_float = new_array_temp.astype(float)
+	masked_array_new = numpy.ma.masked_invalid(new_array_temp_float, float(NAvalue))
+	
+	delete_array_temp = numpy.array(delete_array)
+	delete_array_temp_float = delete_array_temp.astype(float)
+	masked_delete_array = numpy.ma.masked_invalid(delete_array_temp_float, float(NAvalue))
+	return masked_array_new, masked_delete_array
+
 ## function for feature selection, only keeps the best [keep_number] features
 	
 def delete_bad_features_chi2(array,labels, keep_number):
@@ -242,4 +273,4 @@ test = train_svm(labels,array, num_folds, num_jobs)		## grid search (takes a lon
 cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
 
 ## For doing bag-of-words in advance, we need to know what the word-features are. I did this by just saving a while with the boundaries after creating the dictionaries.
-## This means that it is important to only do this when the feature-file is obtained by using the latest version of dictionaries.
+## This means that it is important to only do this when the feature-file is obtained by using the latest version of the dictionaries.
