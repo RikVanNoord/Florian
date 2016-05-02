@@ -216,13 +216,6 @@ def cross_validation_own(array, labels, num_folds, down, test, print_res):
 	label_list = []
 	list_num = 0
 	
-	if down:
-		col_labels = numpy.asarray(labels).reshape(len(labels),1)									## reshape
-		array_with_label = numpy.append(array, col_labels, axis = 1)				## add labels	
-		keepSamples = find_keep_samples(array_with_label)							## find number of samples we keep
-		array, labels = down_sample_array(array_with_label, keepSamples)			## create randomized down-sampled array		
-	
-	
 	for x in range(0, num_folds):
 		list_num_new = list_num + int(len(array) / num_folds)		## keep track of the division in equal parts
 		array_part = array[list_num:list_num_new]					## actual division for array and labels
@@ -267,15 +260,23 @@ def cross_validation_own(array, labels, num_folds, down, test, print_res):
 
 inFile = sys.argv[1]
 
-down_sample = True
 print_res = True
 shuffle_data = True
+down_sample = True
 num_folds = 5
 num_jobs = 16 			## for svm number of parallel jobs
 
 array = numpy.load(inFile)
 array, labels = get_array_and_labels(array, shuffle_data)		## obtain data
 array = preprocessing.normalize(array, axis=0)					## normalize feature values
+
+## Down sampling data (if set to true)
+
+if down_sample:
+	col_labels = numpy.asarray(labels).reshape(len(labels),1)					## reshape
+	array_with_label = numpy.append(array, col_labels, axis = 1)				## add labels	
+	keepSamples = find_keep_samples(array_with_label)							## find number of samples we keep
+	array, labels = down_sample_array(array_with_label, keepSamples)			## create randomized down-sampled array	
 
 ## For doing bag-of-words in advance, we need to know what the word-features are. I did this by just saving a while with the boundaries after creating the dictionaries.
 ## This means that it is important to only do this when the feature-file is obtained by using the latest version of the dictionaries.
