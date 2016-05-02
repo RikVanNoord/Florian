@@ -242,5 +242,5 @@ cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
 
 ## SVM
 
-test = train_svm(labels,array, num_folds, num_jobs)		## grid search
+test = train_svm(labels,array, num_folds, num_jobs)		## grid search (takes a long time usually)
 cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
