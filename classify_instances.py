@@ -124,7 +124,7 @@ def cross_validation_own(array, labels, num_folds, down, test, print_res):
 	list_num = 0
 	
 	if down:
-		col_labels = labels.reshape(len(labels),1)									## reshape
+		col_labels = np.asarray(labels).reshape(len(labels),1)									## reshape
 		array_with_label = numpy.append(array, col_labels, axis = 1)				## add labels	
 		keepSamples = find_keep_samples(array_with_label)							## find number of samples we keep
 		array, labels = down_sample_array(array_with_label, keepSamples)			## create randomized down-sampled array		
@@ -180,7 +180,7 @@ num_folds = 5
 
 array = numpy.load(inFile)
 array, labels = get_array_and_labels(array, shuffle_data)		## obtain data
-array = preprocessing.normalize(array, axis=0)						## normalize feature values
+array = preprocessing.normalize(array, axis=0)					## normalize feature values
 
 test = MultinomialNB()
 cross_validation_own(array, labels, num_folds, down_sample, test, print_res)		
