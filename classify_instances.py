@@ -176,6 +176,18 @@ def down_sample_array(new_array, keepSamples):
 	
 	labels_int = [int(i) for i in labels]	
 	return new_array, labels_int
+
+def add_clf_features(array, clf_list):
+	for x in range(len(set(list(labels)))):					## add binary feature for each category
+		add_list = []
+		for item in clf_list:
+			if item[0] == x:
+				add_list.append(1.0)
+			else:
+				add_list.append(0.0)
+		cat_array = numpy.array(add_list).reshape(len(add_list),1)
+		array = numpy.append(array, cat_array, axis = 1)
+	return array	
 	
 ## I made my own functions for cross validation, since the built-in CV functions do not let you inspect all the output you want (especially necessary for the secondary social actions)
 
@@ -241,6 +253,8 @@ def cross_validation_own(array, labels, num_folds, down, test, print_res):
 		#pred_c = Counter(pred_list)
 		#for key in pred_c:
 		#	print 'Cat',key,':', pred_c[key]
+	
+	return pred_list	
 
 
 #### Main
@@ -259,9 +273,14 @@ array = numpy.load(inFile)
 array, labels = get_array_and_labels(array, shuffle_data)		## obtain data
 array = preprocessing.normalize(array, axis=0)					## normalize feature values
 
+## For doing bag-of-words in advance, we need to know what the word-features are. I did this by just saving a while with the boundaries after creating the dictionaries.
+## This means that it is important to only do this when the feature-file is obtained by using the latest version of the dictionaries.
+
+word_array, other_array = split_array_words(array)
+
 ## Different tests
 
-## Bayes
+## Bayes normal
 
 test = MultinomialNB()
 cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
@@ -271,7 +290,10 @@ cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
 test = train_svm(labels,array, num_folds, num_jobs)		## grid search (takes a long time usually)
 cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
 
-## For doing bag-of-words in advance, we need to know what the word-features are. I did this by just saving a while with the boundaries after creating the dictionaries.
-## This means that it is important to only do this when the feature-file is obtained by using the latest version of the dictionaries.
+## Bag-of-words in advance for Bayes (only change test variable to do so for SVM)
 
-word_array, other_array = split_array_words(array)
+test = MultinomialNB()
+pred = cross_validation_own(word_array, labels, num_folds, down_sample, test, False) ## first do only words, don't print
+clf_array = add_clf_features(other_array, pred)
+cross_validation_own(clf_array, labels, num_folds, down_sample, test, print_res)
+
