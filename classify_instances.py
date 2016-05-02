@@ -294,6 +294,8 @@ cross_validation_own(array, labels, num_folds, down_sample, test, print_res)
 
 test = MultinomialNB()
 pred = cross_validation_own(word_array, labels, num_folds, down_sample, test, False) ## first do only words, don't print
+print pred
+print 'len pred is',len(pred)
 clf_array = add_clf_features(other_array, pred)
 cross_validation_own(clf_array, labels, num_folds, down_sample, test, print_res)
 
