@@ -69,6 +69,56 @@ def find_keep_samples(array):
 	sorted_list = sorted(label_dict.values(), reverse=True)
 	return sorted_list[1]
 
+## svm grid search
+
+def train_svm(labels,array, num_folds, num_jobs):
+	#obtain the best parameter settings for an svm outputcode classifier
+	bestParameters = dict()
+	if len(labels) > 2:
+		print("outputcodeclassifier")
+		param_grid = {'estimator__C': [0.001, 0.005, 0.01,0.1, 0.5, 1,2.5, 5, 10,15,25, 50,75, 100, 500, 1000],
+			'estimator__kernel': ['linear','rbf','poly'], 
+			'estimator__gamma': [0.0005,0.001, 0.002, 0.008,0.016, 0.032,0.064, 0.128,0.256, 0.512, 1.024, 2.048],
+			'estimator__degree': [1,2,3,4]}
+		model = OutputCodeClassifier(svm.SVC(probability=True))
+	else:
+		print("svc model")
+		param_grid = {'C': [0.001, 0.005, 0.01, 0.5, 1, 5, 10, 50, 100, 500, 1000],
+			'kernel': ['linear','rbf','poly'], 
+			'gamma': [0.0005, 0.002, 0.008, 0.032, 0.128, 0.512, 1.024, 2.048],
+			'degree': [1,2,3,4]}
+		model = svm.SVC(probability=True)
+	
+	paramsearch = RandomizedSearchCV(model, param_grid, cv=num_folds, verbose=2,n_iter = params,n_jobs=num_jobs) 
+	print("Grid search...")
+	paramsearch.fit(array_all,numpy.asarray(labels))
+	print("Prediction...")
+	parameters = paramsearch.best_params_
+	
+	for parameter in parameters.keys():
+		print(parameter + ": " + str(parameters[parameter]) + "\n")
+	print("best score: " + str(paramsearch.best_score_) + "\n\n")
+	
+	#for score in paramsearch.grid_scores_:
+	#	print 'mean score:',score.mean_validation_score
+	#	print 'list scores:',score.cv_validation_scores
+	#train an svm outputcode classifier using the best parameters
+	
+	if len(labels) > 2:
+		test = svm.SVC(probability=True, C=parameters['estimator__C'],
+			kernel=parameters['estimator__kernel'],gamma=parameters['estimator__gamma'],
+			degree=parameters['estimator__degree'])
+		out_test = OutputCodeClassifier(test,n_jobs=1)
+		out_test.fit(array_all,labels)
+		#print('Voor SVM final tests after 5-fold cross-validation parameter search:\n')
+		#do_all_tests(test, array_all, array,labels,1, True, svm_bool, down)
+	else:
+		test = svm.SVC(probability=True, C=parameters['C'],
+			kernel=parameters['kernel'],gamma=parameters['gamma'],
+			degree=parameters['degree'])
+		test.fit(array_all,labels)
+	return test	
+
 ## Function for down-sampling the most dominant class (always public event in my case, so therefore we can just check for value 3.0)
 
 def down_sample_array(new_array, keepSamples):
@@ -181,6 +231,8 @@ num_folds = 5
 array = numpy.load(inFile)
 array, labels = get_array_and_labels(array, shuffle_data)		## obtain data
 array = preprocessing.normalize(array, axis=0)					## normalize feature values
+
+## Different tests
 
 test = MultinomialNB()
 cross_validation_own(array, labels, num_folds, down_sample, test, print_res)		
