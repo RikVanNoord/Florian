@@ -126,7 +126,7 @@ newValue5, indexDictWords = fixDict(indexDictWords, newValue4)
 newValue6, indexDictTypes = fixDict(indexDictTypes, newValue5)	
 
 with open('word_feature_boundaries.txt', 'w') as f:
-	f.write(newValue4, newValue5)
+	f.write(newValue4 + ' ' + newValue5)
 
 ## dump all dictionaries to file
 
