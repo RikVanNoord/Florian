@@ -154,7 +154,7 @@ def runSparql(pages,select, answer, dbpedia, rdfType, sparql, indexDictType, fea
 		for item in allResults:
 			if item in indexDictType:										## check if it occurred in the approved types
 				db_list.append([str(item), page, categories[label]])
-				featureList[indexDictType[item]] += 1						## add in the right location
+				featureList = add_to_feature_dict(indexDictType, item, featureList)
 					
 	return featureList, db_list	
 					
@@ -453,8 +453,7 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 						
 						for word in finalTweet:
 							add_word = unicode(word, 'utf-8')
-							featureList[indexDictWords[add_word]] = 1   ## add information about the word (note: can be binary or total number of occurences, right now it is binary)
-							featureList = add_to_feature_dict(indexDictWords, add_word, featureList)	
+							featureList = add_to_feature_dict(indexDictWords, add_word, featureList)	## add information about the word (note: can be binary or total number of occurences, right now it is total)
 							if word in keywordsFixed:
 								keywordsInTweet += 1				
 						
