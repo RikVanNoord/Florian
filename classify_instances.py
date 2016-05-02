@@ -188,6 +188,7 @@ def add_clf_features(array, clf_list):
 		cat_array = numpy.array(add_list).reshape(len(add_list),1)
 		print array.shape
 		print cat_array.shape
+		print 'done'
 		array = numpy.append(array, cat_array, axis = 1)			## add binary feature to feature set
 	return array	
 	
