@@ -3,7 +3,8 @@
 
 import sys,re, numpy, ast, random, math, time, json
 from scipy import delete, stats
-from sklearn import metrics
+#from sklearn import metrics
+from sklearn.metrics import *
 from sklearn import svm
 from sklearn import linear_model
 from sklearn import feature_selection
