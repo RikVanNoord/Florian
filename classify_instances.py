@@ -180,7 +180,7 @@ num_folds = 5
 
 dok_array = numpy.load(inFile)
 array = dok_array.todense()
-array, labels = get_array_and_labels(keepArray, shuffle_data)		## obtain data
+array, labels = get_array_and_labels(array, shuffle_data)		## obtain data
 array = preprocessing.normalize(array, axis=0)						## normalize feature values
 
 test = MultinomialNB()
