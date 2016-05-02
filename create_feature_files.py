@@ -398,10 +398,10 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 	## add the actual feature values
 	
 	for idx,line in enumerate(data):	
-		if idx % 10 == 0:
+		if idx % 50 == 0:
 			print idx
-		if idx > 200:
-			break
+		#if idx > 200:
+		#	break
 		splitLine = line.split('\t')
 		if splitLine[8] != 'NA':			## check if it actually was an event (and not a non-event)
 			featureList = maxList * [0]	
