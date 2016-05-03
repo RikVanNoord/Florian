@@ -157,11 +157,11 @@ def down_sample_array(array, labels):
 	rest_data = [] 
 	publiek_data = []
 	
-	for x in range(len(new_array)):
-		if int(new_array[x][-1]) == 3.0:			## if public event add to publiek_data
-			publiek_data.append(new_array[x])
+	for x in range(len(array)):
+		if int(array_with_label[x][-1]) == 3.0:			## if public event add to publiek_data
+			publiek_data.append(array_with_label[x])
 		else:																	
-			rest_data.append(new_array[x])
+			rest_data.append(array_with_label[x])
 	
 	numpy.asarray(publiek_data)
 	numpy.asarray(rest_data)
