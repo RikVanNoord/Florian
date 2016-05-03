@@ -9,8 +9,8 @@ inFile = sys.argv[1]
 
 ## obtain data files
 
-filePer = 'periodic_events_Florian.txt'
-fileTypes = 'approved_types_dbpedia.txt'
+filePer = 'supplementary_files/periodic_events_Florian.txt'
+fileTypes = 'supplementary_files/approved_types_dbpedia.txt'
 allTypes = [line.strip() for line in open(fileTypes,'r')]
 
 ## Obtain input-file with all labeled examples. This way we know what the important features are. If a word is not in the labeled examples, the classifier cannot learn from it anyway.
