@@ -434,8 +434,8 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 	## add the actual feature values
 	
 	for idx,line in enumerate(data):	
-		#if idx % 50 == 0:
-		#	print idx,': number of failed keys is', failed_keys
+		if idx % 50 == 0:
+			print idx,': number of failed keys is', failed_keys
 			
 		splitLine = line.split('\t')
 		
