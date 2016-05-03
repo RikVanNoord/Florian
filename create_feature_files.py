@@ -73,7 +73,7 @@ def create_matrix(finalList):
 	
 	dok_array = dok_matrix(new_array_temp)
 
-	return dok_array, labels
+	return dok_array, new_array_temp, labels
 
 def getPeriodicityFeatures(keywordsFixed, keywordScores, dateEvent, perDict, missing_value):
 	threshold = 3 ## 3 day threshold
@@ -543,7 +543,7 @@ max_list = len(indexDictDateEvent) + len(indexDictDateTweet) + len(indexDictUser
 
 finalList = getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDictDateTweet, indexDictDateEvent, max_list, perDict, indexDictTypes, other_features, missing_value)	
 
-final_matrix, labels = create_matrix(finalList)
+final_matrix, dense_matrix, labels = create_matrix(finalList)
 
 ## dump the final array using pickle
 
@@ -553,5 +553,4 @@ with open(outFile, 'wb') as outfile_part:
 ## show information regarding the best features (optional), just prints best features	
 
 if labeled_data:
-	final_matrix = final_matrix.todense()
-	show_best_features(final_matrix, labels) 
+	show_best_features(dense_matrix, labels) 
