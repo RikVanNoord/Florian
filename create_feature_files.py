@@ -551,4 +551,5 @@ with open(outFile, 'wb') as outfile_part:
 ## show information regarding the best features (optional), just prints best features	
 
 if labeled_data:
+	final_matrix = final_matrix.todense()
 	show_best_features(final_matrix, labels) 
