@@ -272,7 +272,7 @@ unlabeled_data = sys.argv[2]
 labeled = True
 print_res = True
 shuffle_data = True
-down_sample = True
+down_sample = False
 num_folds = 5
 num_jobs = 16 			## for svm number of parallel jobs
 
