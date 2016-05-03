@@ -314,6 +314,8 @@ def get_feature_information(array,labels):
 ### ID	dateEvent	eventScore	keywords	keywordScores	originalTweets	extraTweets		addExtraTweets(binary 'j' or 'n')	category
 	
 def get_event_information(splitLine, categories):
+	global labeled_data
+	
 	dateEvent =  datetime.datetime.strptime(splitLine[1].strip(),"%Y-%m-%d")
 	eventScore = int(round(float((splitLine[2].strip())),0))
 	oldTweets = splitLine[5].split('-----')
@@ -325,13 +327,17 @@ def get_event_information(splitLine, categories):
 	keywordsFixed = [x.strip() for x in keywords]
 	keywordScores = [x.strip() for x in keywordScoresTemp]
 	
-	newTweets = splitLine[6].split('-----')
+	if labeled_data:
 	
-	if splitLine[7].strip() == 'j':								## check if we add the extra tweets
-		allTweets = oldTweets + newTweets
+		newTweets = splitLine[6].split('-----')
+		
+		if splitLine[7].strip() == 'j':								## check if we add the extra tweets
+			allTweets = oldTweets + newTweets
+		else:
+			allTweets = oldTweets									## get all tweets we want to use
 	else:
-		allTweets = oldTweets									## get all tweets we want to use
-	
+		allTweets = oldTweets										## for unlabeled data we only keep the oldTweets (in my case)	
+		
 	return dateEvent, eventScore, oldTweets, category, dateEventString, keywords, keywordsFixed, keywordScores, newTweets, allTweets
 
 def show_best_features(array, labels, min_occ = [5,10,20,50], cutoff = 50):
