@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+print 'Preprocessing...'
+
 import sys,re, numpy, ast, random, math, time, json
 from scipy import delete, stats
 from sklearn.metrics import *

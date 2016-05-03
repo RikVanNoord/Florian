@@ -437,7 +437,7 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 	## add the actual feature values
 	
 	for idx,line in enumerate(data):	
-		if idx % 50 == 0:
+		if idx % 100 == 0:
 			print idx,'van de', len(data)
 			
 		splitLine = line.split('\t')
