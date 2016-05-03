@@ -355,7 +355,7 @@ else:			## classifying unlabeled data
 	print pred
 	
 	## for finding secondary social actions (or for other categories)
-	interest_cat = 6.0
+	interest_cat = 6
 	new_pred = secondary_probabilities(test, array_unlabeled,interest_cat)
 	print new_pred
 
