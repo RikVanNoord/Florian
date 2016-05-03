@@ -354,7 +354,9 @@ def show_best_features(array, labels, min_occ = [5,10,20,50], cutoff = 50):
 	featureList = [x.strip() for x in open('featurelist_categories.txt','r')]          ## so we can print the right name of the feature for the fixed features
 	
 	nonZeroDict = dict()
-
+	
+	print array.shape
+	
 	for x in range(len(array[0])):
 		non_zero = 0
 		for y in range(len(array)):		
