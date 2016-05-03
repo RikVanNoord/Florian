@@ -545,8 +545,8 @@ final_matrix, labels = create_matrix(finalList)
 
 ## dump the final array using pickle
 
-#with open(outFile, 'wb') as outfile_part:
-#	pickle.dump(final_matrix, outfile_part, protocol=0)
+with open(outFile, 'wb') as outfile_part:
+	pickle.dump(final_matrix, outfile_part, protocol=0)
 
 ## show information regarding the best features (optional), just prints best features	
 
