@@ -261,6 +261,34 @@ def cross_validation_own(array, labels, num_folds, down, test, print_res):
 	
 	return pred_list, array, labels	
 
+def secondary_probabilities((test, array, cat):
+	probs = test.predict_proba(test_final)			## create list of probabilities
+	
+	new_pred_list = []								## maybe we want to change the prediction
+	
+	for teller, item in enumerate(probs):			## loop over probabilities
+		interest_prob = item[cat]
+		higher = 0
+		
+		for idv in item:
+			if idv > interest_prob:					## calculate number of probabilities that are higher
+				higher += 1
+		
+		max_v = 0
+		
+		for tel_v, idv in enumerate(item):			## find largest probability (value itself [max_v] and the category [tel_v])
+			if idv > max_v:
+				max_v = idv
+				index_highest = float(tel_v)
+				
+		if higher == 1:								## our category of interest was indeed the second highest
+			new_pred_list.append(cat)
+		else:		 
+			new_pred_list.append(tel_v)
+			#diff_prob = float(max_v) - float(social_prob)		## maybe you want to do something with the differences in probability
+			#factor_prob = float(max_v) / float(social_prob)
+	return new_pred_list
+			
 
 ############ Main ##############
 
@@ -330,6 +358,6 @@ else:			## classifying unlabeled data
 	
 	## for finding secondary social actions (or for other categories)
 	
-	analyse_probabilities(test, array_unlabeled)
+	new_pred = secondary_probabilities(test, array_unlabeled)
 	
 
