@@ -284,7 +284,7 @@ def secondary_probabilities(test, array, cat):
 		if higher == 1:								## our category of interest was indeed the second highest
 			new_pred_list.append(cat)
 		else:		 
-			new_pred_list.append(tel_v)
+			new_pred_list.append(index_highest)
 			#diff_prob = float(max_v) - float(social_prob)		## maybe you want to do something with the differences in probability
 			#factor_prob = float(max_v) / float(social_prob)
 	return new_pred_list
