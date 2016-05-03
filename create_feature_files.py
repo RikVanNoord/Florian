@@ -437,8 +437,8 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 	## add the actual feature values
 	
 	for idx,line in enumerate(data):	
-		#if idx % 50 == 0:
-		#	print idx,': number of failed keys is', failed_keys
+		if idx % 50 == 0:
+			print idx,'van de', len(data)
 			
 		splitLine = line.split('\t')
 		## check if we skip the event (annotated as non-event, only possible for labeled data)
