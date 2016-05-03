@@ -311,6 +311,9 @@ if labeled:			## classifying labeled data doing cross validation
 
 	test = MultinomialNB()
 	pred, word_array, labels = cross_validation_own(word_array, labels, num_folds, down_sample, test, False) ## first do only words, don't print
+	
+	other_array = other_array[0:len(word_array)]
+	
 	clf_array = add_clf_features(other_array, pred)
 	cross_validation_own(clf_array, labels, num_folds, down_sample, test, print_res)
 
