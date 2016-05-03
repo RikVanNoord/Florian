@@ -357,11 +357,12 @@ else:			## classifying unlabeled data
 	test.fit(array, labels)
 	pred = test.predict(array_unlabeled)
 	
-	print 'Predictions:'
+	print '\nPredictions:'
 	print pred
 	
 	## for finding secondary social actions (or for other categories)
 	interest_cat = 6
 	new_pred = secondary_probabilities(test, array_unlabeled,interest_cat)
+	print '\nNew (fixed secondary) predictions:\n'
 	print new_pred
 
