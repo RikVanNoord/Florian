@@ -320,7 +320,8 @@ else:			## classifying unlabeled data
 	test.fit(array, labels)
 	pred = test.predict(array_unlabeled)
 	
-	if print_res:
-		print_results(labels, pred)
+	print 'Predictions:'
+	print pred
+	
 	
 
