@@ -297,7 +297,7 @@ def secondary_probabilities(test, array, cat):
 labeled_data = sys.argv[1]
 unlabeled_data = sys.argv[2]
 
-labeled = True
+labeled = False
 print_res = True
 shuffle_data = True
 down_sample = True
