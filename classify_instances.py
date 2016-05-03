@@ -295,9 +295,7 @@ if down_sample:
 
 word_array, other_array = split_array_words(array)
 
-######## Classifying labeled data #########
-
-if labeled:	
+if labeled:			## classifying labeled data doing cross validation
 	
 	## Bayes normal
 
@@ -316,9 +314,8 @@ if labeled:
 	clf_array = add_clf_features(other_array, pred)
 	cross_validation_own(clf_array, labels, num_folds, down_sample, test, print_res)
 
-####### Classifying unlabeled data #########
-
-else:
+else:			## classifying unlabeled data		
+	
 	array_unlabeled = numpy.load(unlabeled_data)
 	test = MultinomialNB()	
 	test.fit(array, labels)

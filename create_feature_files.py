@@ -18,6 +18,15 @@ failed_keys = 0
 inFile = sys.argv[1]
 outFile = sys.argv[2]
 
+binary_lab = sys.argv[3]
+
+if binary_lab == '1':
+	labeled_data = True
+elif binary_lab == '0':
+	labeled_data = False
+else:
+	raise ValueError('Third argument (labeled data or not) must be 0 or 1')		
+
 ## read in the event(s) that need to be put in feature format
 
 data_all = [line.strip() for line in open(inFile,'r')]
@@ -301,6 +310,8 @@ def get_feature_information(array,labels):
 		feature_num.append([item[2],item[0]])
 	
 	return feature_num	
+
+### ID	dateEvent	eventScore	keywords	keywordScores	originalTweets	extraTweets		addExtraTweets(binary 'j' or 'n')	category
 	
 def get_event_information(splitLine, categories):
 	dateEvent =  datetime.datetime.strptime(splitLine[1].strip(),"%Y-%m-%d")
