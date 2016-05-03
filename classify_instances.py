@@ -30,7 +30,7 @@ def get_array_and_labels(array, shuffle):
 		else:
 			labels.append(array[x][-1])		
 	
-	new_array = numpy.delete(array, -1, 1)
+	new_array = numpy.delete(array, -1, 1)										## delete label and normalized label
 	new_array2 = numpy.delete(new_array, -1, 1)	
 	
 	labels_int = [int(i) for i in labels]	
@@ -184,7 +184,7 @@ def down_sample_array(array, labels):
 ## function for printing relevant scores
 
 def print_results(labels, pred_list):
-	print 'Accuracy:',accuracy_score(list(labels), pred_list)
+	#print 'Accuracy:',accuracy_score(list(labels), pred_list)
 	print 'f1-weighted:',f1_score(list(labels),pred_list, average='weighted',pos_label = None),'\n' 
 	print 'precision-weighted:',precision_score(list(labels),pred_list, average='weighted',pos_label = None),'\n' 
 	print 'recall-weighted:',recall_score(list(labels),pred_list, average='weighted',pos_label = None),'\n'    
@@ -297,12 +297,16 @@ def secondary_probabilities(test, array, cat):
 labeled_data = sys.argv[1]
 unlabeled_data = sys.argv[2]
 
+## parameters
+
 labeled = False
 print_res = True
 shuffle_data = True
 down_sample = True
 num_folds = 5
 num_jobs = 16 			## for svm number of parallel jobs
+
+## data preprocessing
 
 array_dok = numpy.load(labeled_data)
 array = array_dok.toarray()											## get dense matrix from sparse dok matrix
@@ -321,6 +325,8 @@ if down_sample:
 word_array, other_array = split_array_words(array)
 
 print 'Preprocessing data complete'
+
+## Classification
 
 if labeled:			## classifying labeled data doing cross validation
 	
