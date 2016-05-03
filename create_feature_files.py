@@ -45,7 +45,8 @@ def load_dict(name):
 	infile.close()
 	return dictje
 
-def create_dok_matrix(finalList):
+def create_matrix(finalList):
+	global labeled_data
 	array_temp2 = numpy.array(finalList)
 	array_temp = array_temp2.astype(float)
 
@@ -60,12 +61,16 @@ def create_dok_matrix(finalList):
 	aray,labels = get_labels(array, False)												## get data and labels	
 	array = preprocessing.normalize(array, axis=0)										## normalize features	
 	
-	new_array = array.tolist()
-	for x in range(0, len(array)):														## categories get accidently normalized as well, fix that
-		new_array[x].append(labels[x])
+	if labeled_data:
+		new_array = array.tolist()
+		for x in range(0, len(array)):														## categories get accidently normalized as well, fix that
+			new_array[x].append(labels[x])
 
-	new_array_temp2 = numpy.array(new_array)
-	new_array_temp = new_array_temp2.astype(float)	
+		new_array_temp2 = numpy.array(new_array)
+		new_array_temp = new_array_temp2.astype(float)
+	else:
+		new_array_temp = array.astype(float)		
+	
 	#dok_array = dok_matrix(new_array_temp)
 
 	return new_array_temp, labels
@@ -146,7 +151,6 @@ def filterResults(allResults):
 def runSparql(pages,select, answer, dbpedia, rdfType, sparql, indexDictType, featureList, label): 
 	global teller, allTypes
 	foundResult = False
-	db_list =[]
 	categories = ['Sport','Politiek','Uitzending','Publieksevenement','Software','Bijzondere dag','Sociale actie','Celebrity nieuws','Reclame','Overig']
 	
 	for page in pages:
@@ -162,10 +166,9 @@ def runSparql(pages,select, answer, dbpedia, rdfType, sparql, indexDictType, fea
 			allResults = filterResults(allResults)							## filter the results to only obtain meaningful ones
 		for item in allResults:
 			if item in indexDictType:										## check if it occurred in the approved types
-				db_list.append([str(item), page, categories[label]])
 				featureList = add_to_feature_dict(indexDictType, item, featureList)
 					
-	return featureList, db_list	
+	return featureList
 					
 def fixDbpediaKeywords(keywords):
 	pages = []
@@ -215,9 +218,9 @@ def getDbpediaFeatures(keywords, indexDictTypes, featureList, label, anchors):
 	
 	pages = fixDbpediaKeywords(keywords)			## get all pages
 	finalPages = fixAmbigiousPages(pages, anchors)	## fix ambigious pages (doorverwijspaginas)
-	featureList, db_list = runSparql(finalPages, select, answer, dbpedia, rdfType, sparql, indexDictTypes, featureList, label)							## run sparql on all pages
+	featureList = runSparql(finalPages, select, answer, dbpedia, rdfType, sparql, indexDictTypes, featureList, label)							## run sparql on all pages
 	
-	return featureList, db_list
+	return featureList
 
 def most_occuring_label(feature,array, f_value, binary):
 	labels = []
@@ -507,13 +510,15 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 			
 			featureList[14] = len(allTweets)						## add number of tweets
 			
-			per = getPeriodicityFeatures(keywordsFixed, keywordScores, dateEvent, perDict, missing_value)	
+			per = getPeriodicityFeatures(keywordsFixed, keywordScores, dateEvent, perDict, missing_value)		## periodicity features
 			for x in range(0, len(per)):		## add the features
 				featureList[x+15] = per[x]
 			
-			featureList, db_list = getDbpediaFeatures(keywords, indexDictTypes, featureList, label, anchors)
+			featureList = getDbpediaFeatures(keywords, indexDictTypes, featureList, label, anchors)				## DBpedia features
+			
 			if labeled_data:
-				featureList.append(int(splitLine[8]) -1)										## add the label as number
+				featureList.append(int(splitLine[8]) -1)				## add the label as number
+			
 			finalList.append(featureList)								## keep track of the final featureList over all events
 			
 	return finalList
@@ -536,11 +541,12 @@ max_list = len(indexDictDateEvent) + len(indexDictDateTweet) + len(indexDictUser
 
 finalList = getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDictDateTweet, indexDictDateEvent, max_list, perDict, indexDictTypes, other_features, missing_value)	
 
-final_matrix, labels = create_dok_matrix(finalList)
+final_matrix, labels = create_matrix(finalList)
 
 ## dump the final array using pickle
 
 with open(outFile, 'wb') as outfile_part:
 	pickle.dump(final_matrix, outfile_part, protocol=0)
 
-show_best_features(final_matrix, labels) ## show information regarding the best features (optional)	
+if labeled_data:
+	show_best_features(final_matrix, labels) ## show information regarding the best features (optional)	
