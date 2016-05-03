@@ -291,6 +291,8 @@ if down_sample:
 
 word_array, other_array = split_array_words(array)
 
+print 'Preprocessing data complete'
+
 if labeled:			## classifying labeled data doing cross validation
 	
 	## Bayes normal
