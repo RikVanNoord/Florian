@@ -277,7 +277,7 @@ num_folds = 5
 num_jobs = 16 			## for svm number of parallel jobs
 
 array_dok = numpy.load(labeled_data)
-array = array_dok.todense()											## get dense matrix from sparse dok matrix
+array = array_dok.toarray()											## get dense matrix from sparse dok matrix
 
 print array.shape
 	
