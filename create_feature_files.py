@@ -428,16 +428,27 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 	
 	anchors = buildAnchorHash() ## get the anchors for DBpedia extraction
 	
+	## check if we skip the event (annotated as non-event, only possible for labeled data)
+	
+	if labeled_data:
+		if splitLine[8] == 'NA':
+			skip_event = True
+			label = 'no_anno'
+		else:
+			skip_event = False
+			label = int(splitLine[8]) -1
+	else:
+		skip_event = False
+		label = 'impossible'			
+	
 	## add the actual feature values
 	
 	for idx,line in enumerate(data):	
-		if idx % 50 == 0:
-			print idx,': number of failed keys is', failed_keys
+		#if idx % 50 == 0:
+		#	print idx,': number of failed keys is', failed_keys
 			
-		if idx > 700:
-			break
 		splitLine = line.split('\t')
-		if splitLine[8] != 'NA':			## check if it actually was an event (and not a non-event)
+		if not skip_event:			## check if it actually was an event (and not a non-event)
 			featureList = maxList * [0]	
 			
 			## get all event information
@@ -501,8 +512,6 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 			per = getPeriodicityFeatures(keywordsFixed, keywordScores, dateEvent, perDict, missing_value)	
 			for x in range(0, len(per)):		## add the features
 				featureList[x+15] = per[x]
-			
-			label = int(splitLine[8])-1 		## set label
 			
 			featureList, db_list = getDbpediaFeatures(keywords, indexDictTypes, featureList, label, anchors)
 		
