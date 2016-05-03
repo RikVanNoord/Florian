@@ -322,7 +322,7 @@ def get_event_information(splitLine, categories):
 	dateEvent =  datetime.datetime.strptime(splitLine[1].strip(),"%Y-%m-%d")
 	eventScore = int(round(float((splitLine[2].strip())),0))
 	oldTweets = splitLine[5].split('-----')
-	category = categories[int(splitLine[8]) -1]	
+	#category = categories[int(splitLine[8]) -1]	
 	dateEventString = splitLine[1].strip()					## get date information in sparse format
 	
 	keywords = splitLine[3].strip().split(',')
@@ -341,7 +341,7 @@ def get_event_information(splitLine, categories):
 	else:
 		allTweets = oldTweets										## for unlabeled data we only keep the oldTweets (in my case)	
 		
-	return dateEvent, eventScore, category, dateEventString, keywords, keywordsFixed, keywordScores, allTweets
+	return dateEvent, eventScore, dateEventString, keywords, keywordsFixed, keywordScores, allTweets
 
 def show_best_features(array, labels, min_occ = [5,10,20,50], cutoff = 50):
 
@@ -454,7 +454,7 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 			
 			## get all event information
 			
-			dateEvent, eventScore, category, dateEventString, keywords, keywordsFixed, keywordScores, allTweets = get_event_information(splitLine, categories)
+			dateEvent, eventScore, dateEventString, keywords, keywordsFixed, keywordScores, allTweets = get_event_information(splitLine, categories)
 			
 			## add 1 (positive) at the right place in the feature-file using the dictionary
 			
