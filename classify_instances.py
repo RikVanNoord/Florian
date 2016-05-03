@@ -282,9 +282,9 @@ def secondary_probabilities(test, array, cat):
 				index_highest = float(tel_v)
 				
 		if higher == 1:								## our category of interest was indeed the second highest
-			new_pred_list.append(cat)
+			new_pred_list.append(float(cat))
 		else:		 
-			new_pred_list.append(index_highest)
+			new_pred_list.append(float(index_highest))
 			#diff_prob = float(max_v) - float(social_prob)		## maybe you want to do something with the differences in probability
 			#factor_prob = float(max_v) / float(social_prob)
 	return new_pred_list
@@ -355,7 +355,7 @@ else:			## classifying unlabeled data
 	print pred
 	
 	## for finding secondary social actions (or for other categories)
-	
-	new_pred = secondary_probabilities(test, array_unlabeled,6)
+	interest_cat = 6.0
+	new_pred = secondary_probabilities(test, array_unlabeled,interest_cat)
 	print new_pred
 
