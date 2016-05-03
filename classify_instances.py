@@ -269,7 +269,7 @@ def cross_validation_own(array, labels, num_folds, down, test, print_res):
 labeled_data = sys.argv[1]
 unlabeled_data = sys.argv[2]
 
-labeled = True
+labeled = False
 print_res = True
 shuffle_data = True
 down_sample = False
