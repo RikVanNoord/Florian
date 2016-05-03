@@ -34,7 +34,7 @@ data = [x for x in data_all if x]
 
 ## read in approved DBpedia types
 
-fileTypes = 'approved_types_dbpedia.txt'
+fileTypes = 'supplementary_files/approved_types_dbpedia.txt'
 allTypes = [line.strip() for line in open(fileTypes,'r')]
 
 ### Functions ####
@@ -112,13 +112,13 @@ def getPeriodicityFeatures(keywordsFixed, keywordScores, dateEvent, perDict, mis
 ## function to do the disambiguation in DBpedia (provided code)
 
 def buildAnchorHash():
-	page = csv.reader(open("page.csv", "r"), delimiter=",")
+	page = csv.reader(open("supplementary_files/page.csv", "r"), delimiter=",")
 	pages = dict()
 	for row in page :
 		if len(row) == 3:
 			pages[row[0]] = row[1]
 
-	afile = csv.reader(open("anchor_summary.csv", "r"), delimiter=",")
+	afile = csv.reader(open("supplementary_files/anchor_summary.csv", "r"), delimiter=",")
 	anchors = dict()
 	for row in afile :
 		if len(row) == 2:
