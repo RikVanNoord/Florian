@@ -338,7 +338,7 @@ def get_event_information(splitLine, categories):
 	else:
 		allTweets = oldTweets										## for unlabeled data we only keep the oldTweets (in my case)	
 		
-	return dateEvent, eventScore, oldTweets, category, dateEventString, keywords, keywordsFixed, keywordScores, newTweets, allTweets
+	return dateEvent, eventScore, category, dateEventString, keywords, keywordsFixed, keywordScores, allTweets
 
 def show_best_features(array, labels, min_occ = [5,10,20,50], cutoff = 50):
 
@@ -442,7 +442,7 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 			
 			## get all event information
 			
-			dateEvent, eventScore, oldTweets, category, dateEventString, keywords, keywordsFixed, keywordScores, newTweets, allTweets = get_event_information(splitLine, categories)
+			dateEvent, eventScore, category, dateEventString, keywords, keywordsFixed, keywordScores, allTweets = get_event_information(splitLine, categories)
 			
 			## add 1 (positive) at the right place in the feature-file using the dictionary
 			
