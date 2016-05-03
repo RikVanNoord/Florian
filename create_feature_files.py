@@ -433,13 +433,11 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 	if labeled_data:
 		if splitLine[8] == 'NA':
 			skip_event = True
-			label = 'no_anno'
 		else:
-			skip_event = False
-			label = int(splitLine[8]) -1
+			skip_event = False	
 	else:
 		skip_event = False
-		label = 'impossible'			
+				
 	
 	## add the actual feature values
 	
@@ -514,8 +512,8 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 				featureList[x+15] = per[x]
 			
 			featureList, db_list = getDbpediaFeatures(keywords, indexDictTypes, featureList, label, anchors)
-		
-			featureList.append(int(splitLine[8]) -1)					## add the label as number
+			if labeled_data:
+				featureList.append(int(splitLine[8]) -1)										## add the label as number
 			finalList.append(featureList)								## keep track of the final featureList over all events
 			
 	return finalList
