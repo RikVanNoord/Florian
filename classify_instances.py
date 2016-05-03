@@ -321,7 +321,6 @@ if labeled:			## classifying labeled data doing cross validation
 else:			## classifying unlabeled data		
 	
 	array_unlabeled = numpy.load(unlabeled_data)
-	array_unlabeled = array_unlabeled.toarray()
 	test = MultinomialNB()	
 	test.fit(array, labels)
 	pred = test.predict(array_unlabeled)
