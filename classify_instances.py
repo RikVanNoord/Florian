@@ -359,5 +359,5 @@ else:			## classifying unlabeled data
 	## for finding secondary social actions (or for other categories)
 	
 	new_pred = secondary_probabilities(test, array_unlabeled)
-	
+	print new_pred
 
