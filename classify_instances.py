@@ -207,9 +207,6 @@ def add_clf_features(array, clf_list):
 			else:
 				add_list.append(0.0)
 		cat_array = numpy.array(add_list).reshape(len(add_list),1)
-		print array.shape
-		print cat_array.shape
-		print 'done'
 		array = numpy.append(array, cat_array, axis = 1)			## add binary feature to feature set
 	return array	
 	
@@ -253,7 +250,6 @@ def cross_validation_own(array, labels, num_folds, down, test, print_res):
 		pred = test.predict(test_data)
 		pred_temp = list(pred)
 		pred_list += pred_temp
-		print len(pred_list)
 	
 	labels = labels[0:list_num_new]  ## delete labels that were just outside X equal folds (sometimes losing few instances, it is possible to save them and classify with leave-one-out anyway, or simply add them to last part)
 	array = array[0:list_num_new]

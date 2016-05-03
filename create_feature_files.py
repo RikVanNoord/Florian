@@ -548,5 +548,7 @@ final_matrix, labels = create_matrix(finalList)
 #with open(outFile, 'wb') as outfile_part:
 #	pickle.dump(final_matrix, outfile_part, protocol=0)
 
+## show information regarding the best features (optional), just prints best features	
+
 if labeled_data:
-	show_best_features(final_matrix, labels) ## show information regarding the best features (optional)	
+	show_best_features(final_matrix, labels) 
