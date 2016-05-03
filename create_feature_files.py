@@ -379,7 +379,7 @@ def show_best_features(array, labels, min_occ = [5,10,20,50], cutoff = 10):
 	
 	for value in min_occ:
 		feature_names = []
-		print '\nBest features that occur at least',min_occ,'times:\n'
+		print '\nBest features that occur at least',value,'times:\n'
 		for item in feature_numbers:
 			counter = nonZeroDict[item[0]]
 			if counter > value:	
