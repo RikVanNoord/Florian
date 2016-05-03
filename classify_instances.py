@@ -326,7 +326,7 @@ if down_sample:
 
 word_array, other_array = split_array_words(array)
 
-print 'Preprocessing data complete'
+print 'Classifying...'
 
 ## Classification
 
