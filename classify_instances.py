@@ -328,5 +328,8 @@ else:			## classifying unlabeled data
 	print 'Predictions:'
 	print pred
 	
+	## for finding secondary social actions (or for other categories)
+	
+	analyse_probabilities(test, array_unlabeled)
 	
 
