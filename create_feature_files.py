@@ -438,7 +438,6 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 			print idx,': number of failed keys is', failed_keys
 			
 		splitLine = line.split('\t')
-		
 		## check if we skip the event (annotated as non-event, only possible for labeled data)
 	
 		if labeled_data:
@@ -447,6 +446,7 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 			else:
 				skip_event = False	
 		else:
+			splitLine.insert(0,'ID')	## unlabeled data does not have an ID, add something irrelevant
 			skip_event = False
 		
 		if not skip_event:			## check if it actually was an event (and not a non-event)
