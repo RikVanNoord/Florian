@@ -71,9 +71,9 @@ def create_matrix(finalList):
 	else:
 		new_array_temp = array.astype(float)		
 	
-	#dok_array = dok_matrix(new_array_temp)
+	dok_array = dok_matrix(new_array_temp)
 
-	return new_array_temp, labels
+	return dok_array, labels
 
 def getPeriodicityFeatures(keywordsFixed, keywordScores, dateEvent, perDict, missing_value):
 	threshold = 3 ## 3 day threshold
