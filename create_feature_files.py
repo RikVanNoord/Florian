@@ -148,7 +148,7 @@ def filterResults(allResults):
 	return keepResults			
 			
 		
-def runSparql(pages,select, answer, dbpedia, rdfType, sparql, indexDictType, featureList, label): 
+def runSparql(pages,select, answer, dbpedia, rdfType, sparql, indexDictType, featureList): 
 	global teller, allTypes
 	foundResult = False
 	categories = ['Sport','Politiek','Uitzending','Publieksevenement','Software','Bijzondere dag','Sociale actie','Celebrity nieuws','Reclame','Overig']
@@ -205,7 +205,7 @@ def fixAmbigiousPages(pages, anchors):
 	finalPagesSet = list(set(finalPages))
 	return finalPagesSet
 
-def getDbpediaFeatures(keywords, indexDictTypes, featureList, label, anchors):	
+def getDbpediaFeatures(keywords, indexDictTypes, featureList, anchors):	
 	## set the general query information
 	
 	sparql = SPARQLWrapper("http://nl.dbpedia.org/sparql")
@@ -218,7 +218,7 @@ def getDbpediaFeatures(keywords, indexDictTypes, featureList, label, anchors):
 	
 	pages = fixDbpediaKeywords(keywords)			## get all pages
 	finalPages = fixAmbigiousPages(pages, anchors)	## fix ambigious pages (doorverwijspaginas)
-	featureList = runSparql(finalPages, select, answer, dbpedia, rdfType, sparql, indexDictTypes, featureList, label)							## run sparql on all pages
+	featureList = runSparql(finalPages, select, answer, dbpedia, rdfType, sparql, indexDictTypes, featureList)							## run sparql on all pages
 	
 	return featureList
 
@@ -514,7 +514,7 @@ def getFeatureValues(indexDictKeywords, indexDictWords, indexDictUser, indexDict
 			for x in range(0, len(per)):		## add the features
 				featureList[x+15] = per[x]
 			
-			featureList = getDbpediaFeatures(keywords, indexDictTypes, featureList, label, anchors)				## DBpedia features
+			featureList = getDbpediaFeatures(keywords, indexDictTypes, featureList, anchors)				## DBpedia features
 			
 			if labeled_data:
 				featureList.append(int(splitLine[8]) -1)				## add the label as number
