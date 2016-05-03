@@ -261,7 +261,7 @@ def cross_validation_own(array, labels, num_folds, down, test, print_res):
 	
 	return pred_list, array, labels	
 
-def secondary_probabilities((test, array, cat):
+def secondary_probabilities(test, array, cat):
 	probs = test.predict_proba(test_final)			## create list of probabilities
 	
 	new_pred_list = []								## maybe we want to change the prediction
