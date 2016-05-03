@@ -269,10 +269,10 @@ def cross_validation_own(array, labels, num_folds, down, test, print_res):
 labeled_data = sys.argv[1]
 unlabeled_data = sys.argv[2]
 
-labeled = False
+labeled = True
 print_res = True
 shuffle_data = True
-down_sample = False
+down_sample = True
 num_folds = 5
 num_jobs = 16 			## for svm number of parallel jobs
 
